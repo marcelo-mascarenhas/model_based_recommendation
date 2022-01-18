@@ -17,7 +17,7 @@ class Recommender():
         
         data => Path to file which containers UserID, ItemIDs and Ratings to train the matrix using FunkSvd.
         number_of_dimensions => Number of latent dimensions.
-        init_num => 
+        init_num => Initial value of the decomposed matrices.
         
         
         
@@ -89,7 +89,10 @@ class Recommender():
 
 
     def funkSvd(self, learning_rate=0.005, epochs=20, beta=0.02):
-
+        """
+        Funk SVD.
+        Possible improvement: adagrad.
+        """
         p_matrix, p_dc = self.p_matrix_tuple
 
         q_matrix, q_dc = self.q_matrix_tuple
@@ -113,7 +116,7 @@ class Recommender():
                 p_matrix[p_dc[uid], :] += learning_rate*(p_grad_vector - beta*p_vector)
             
     def __gradient_vectors(self, pvector, qvector, error):    
-
+      
         p_gradv = 2*error*qvector
 
         q_gradv = 2*error*pvector
